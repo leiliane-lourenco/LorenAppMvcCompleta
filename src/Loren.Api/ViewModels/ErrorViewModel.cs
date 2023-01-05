@@ -1,6 +1,6 @@
 using System;
 
-namespace Loren.Api.Models
+namespace Loren.Api.ViewModels
 {
     public class ErrorViewModel
     {

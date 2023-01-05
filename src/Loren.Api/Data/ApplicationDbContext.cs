@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Loren.Api.ViewModels;
 
 namespace Loren.Api.Data
 {
@@ -10,7 +8,8 @@ namespace Loren.Api.Data
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
-        {
-        }
+        { }
+        public DbSet<Loren.Api.ViewModels.EnderecoViewModel> EnderecoViewModel { get; set; }
+        
     }
 }

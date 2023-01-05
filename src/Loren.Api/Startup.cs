@@ -41,6 +41,7 @@ namespace Loren.Api
             services.AddControllersWithViews();
             services.AddRazorPages();
 
+            services.AddAutoMapper(typeof(Startup));
             services.AddScoped<MeuDbContext>();
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
             services.AddScoped<IFornecedorRepository, FornecedorRepository>();
