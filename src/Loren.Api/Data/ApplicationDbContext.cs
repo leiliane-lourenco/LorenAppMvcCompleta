@@ -8,8 +8,7 @@ namespace Loren.Api.Data
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
-        { }
-        public DbSet<Loren.Api.ViewModels.EnderecoViewModel> EnderecoViewModel { get; set; }
+        { }       
         
     }
 }
