@@ -35,6 +35,12 @@ html {
   }
 }
 
+h2{
+    color:darkblue;
+    padding-top:30px
+    
+}
+
 .border-top {
   border-top: 1px solid #e5e5e5;
 }
