@@ -16,9 +16,11 @@
                 @Html.DisplayNameFor(model => model.Ativo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Fornecedor.Nome)
+                @Html.DisplayNameFor(model => model.Fornecedor)
             </th>
-            <th></th>
+            <th>
+            </th>
+           
         </tr>
     </thead>
     <tbody>
@@ -26,7 +28,7 @@
         {
             <tr>
                 <td>
-                   <img src="~/imagens/@item.Imagem" alt="@item.Imagem" style="width:95px; height:100px"/>
+                   <img src="~/imagens/@item.Imagem" alt="@item.Imagem" style="width:80px; height:100px"/>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Nome)
@@ -38,12 +40,12 @@
                     @Html.DisplayFor(modelItem => item.Ativo)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Fornecedor.Documento)
+                    @Html.DisplayFor(modelItem => item.Fornecedor.Nome)
                 </td>
                <td class="text-right">
-                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><spam class="fa fa-search"></spam></a>
-                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><spam class="fa fa-pencil-alt"></spam></a>
-                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><spam class="fa fa-trash"></spam></a>
+                    <a class="btn btn-info" asp-controller="Produtos" asp-action="Details" asp-route-id="@item.Id"><spam class="fa fa-search"></spam></a>
+                    <a class="btn btn-warning" asp-controller="Produtos" asp-action="Edit" asp-route-id="@item.Id"><spam class="fa fa-pencil-alt"></spam></a>
+                    <a class="btn btn-danger" asp-controller="Produtos" asp-action="Delete" asp-route-id="@item.Id"><spam class="fa fa-trash"></spam></a>
                 </td>
             </tr>
         }

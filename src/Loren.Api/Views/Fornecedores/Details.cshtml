@@ -35,18 +35,19 @@
         </dd>
     </dl>
 </div>
+
+<div>
+    <partial name="_DetalhesEndereco" />
+</div>
+<h2>Produtos</h2>
+<div>
+    <partial name="../Produtos/_ListaProdutos" model="@Model.Produtos" />
+</div>
+
 <div>
     <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
     <a class="btn btn-info" asp-action="Index">Voltar</a>
 </div>
 
-<br />
-<hr />
-<div>
-    <h4>Endereco</h4>
-    <partial name="_DetalhesEndereco" />
-    <div>
-        <a class="btn btn-primary" asp-controller="Enderecos" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
-        <a class="btn btn-info" asp-action="Index">Voltar</a>
-    </div>
-</div>
+
+

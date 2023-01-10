@@ -1,7 +1,7 @@
 ﻿@model Loren.Api.ViewModels.ProdutoViewModel
 
 @{
-    ViewData["Title"] = "Deletar " + Model.Nome;
+    ViewData["Title"] = "Deletar - " + Model.Nome;
 }
 
 <h2>@ViewData["Title"]</h2>
@@ -9,48 +9,49 @@
 <h4 style="color:red">Você tem certeza disso?</h4>
 <div>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nome)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Descricao)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Descricao)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Imagem)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Imagem)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Valor)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Valor)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Ativo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Ativo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Fornecedor)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Fornecedor.Documento)
-        </dd class>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Excluir" class="btn btn-danger" /> 
-        <a class="btn btn-info" asp-action="Index">Voltar</a>
-    </form>
+    <div class="row">
+        <div class="col-md-4">
+            <img src="~/imagens/@Model.Imagem" alt="@Model.Imagem" style="width: 250px; height: 330px" />
+        </div>
+
+        <div class="col-md-6">
+            <dl>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Fornecedor)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Fornecedor.Nome)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Nome)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Nome)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Descricao)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Descricao)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Valor)
+                </dt>
+                <dd class="col-sm-10">
+                    @Model.Valor.ToString("C")
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Ativo)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Ativo)
+                </dd>
+            </dl>
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="Id" />
+                <input type="submit" value="Excluir" class="btn btn-danger" />
+                <a class="btn btn-info" asp-action="Index">Voltar</a>
+            </form>
+        </div>
+    </div>
 </div>
