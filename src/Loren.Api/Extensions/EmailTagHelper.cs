@@ -5,7 +5,7 @@ namespace Loren.Api.Extensions
 {
     public class EmailTagHelper : TagHelper
     {
-        public string EmailDomain { get; set; } = "loren";
+        public string EmailDomain { get; set; } = "loren.dev.io";
 
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {

@@ -24,11 +24,13 @@ namespace Loren.Api.Controllers
             _mapper = mapper;
         }
 
+        [Route("lista-de-fornecedores")]
         public async Task<IActionResult> Index()
         {
             return View(_mapper.Map<IEnumerable<FornecedorViewModel>>(await _fornecedorRepository.ObterTodos()));
         }
 
+        [Route("dados-do-fornecedor/{id:guid}")]
         public async Task<IActionResult> Details(Guid id)
         {
             var fonecedorViewModel = await ObterFornecedorEndereco(id);
@@ -39,11 +41,14 @@ namespace Loren.Api.Controllers
             return View(fonecedorViewModel);
         }
 
+
+        [Route("novo-fornecedor")]
         public IActionResult Create()
         {
             return View();
         }
 
+        [Route("novo-fornecedor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(FornecedorViewModel fornecedorViewModel)
@@ -58,6 +63,7 @@ namespace Loren.Api.Controllers
 
         }
 
+        [Route("editar-fornecedor/{id:guid}")]
         public async Task<IActionResult> Edit(Guid id)
         {
             var fornecedorViewModel = await ObterFornecedorProdutosEndereco(id);
@@ -67,7 +73,8 @@ namespace Loren.Api.Controllers
 
             return View(fornecedorViewModel);
         }
-       
+
+        [Route("editar-fornecedor/{id:guid}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, FornecedorViewModel fornecedorViewModel)
@@ -85,6 +92,7 @@ namespace Loren.Api.Controllers
             
         }
 
+        [Route("excluir-fornecedor/{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var fonecedorViewModel = await ObterFornecedorEndereco(id);
@@ -95,6 +103,7 @@ namespace Loren.Api.Controllers
             return View(fonecedorViewModel);
         }
 
+        [Route("excluir-fornecedor/{id:guid}")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
@@ -109,6 +118,7 @@ namespace Loren.Api.Controllers
             return View(fornecedorViewModel);
         }
 
+        [Route("obter-endereco-fornecedor/{id:guid}")]
         public async Task<IActionResult> ObterEndereco (Guid id)
         {
             var fornecedor = await ObterFornecedorEndereco(id);
@@ -118,6 +128,8 @@ namespace Loren.Api.Controllers
 
             return PartialView("_DetalhesEndereco", fornecedor);
         }
+
+        [Route("atualizar-endereco-fornecedor/{id:guid}")]
         public async Task<IActionResult> AtualizarEndereco(Guid id)
         {
             var fornecedor = await ObterFornecedorEndereco(id);
@@ -128,6 +140,7 @@ namespace Loren.Api.Controllers
             return PartialView("_AtualizarEndereco", new FornecedorViewModel { Endereco = fornecedor.Endereco });
         }
 
+        [Route("atualizar-endereco-fornecedor/{id:guid}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AtualizarEndereco(FornecedorViewModel fornecedorViewModel)
