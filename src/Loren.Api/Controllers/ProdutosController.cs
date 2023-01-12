@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Loren.Api.Extensions;
 using Loren.Api.ViewModels;
 using Loren.Business.Interfaces;
 using Loren.Business.Models;
 using Loren.Business.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -13,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace Loren.Api.Controllers
 {
+    [Authorize]
     public class ProdutosController : BaseController
     {
         private readonly IProdutoRepository _produtoRepository;
@@ -32,12 +35,14 @@ namespace Loren.Api.Controllers
             _mapper = mapper;
         }
 
+        [AllowAnonymous]
         [Route("lista-de-produtos")]
         public async Task<IActionResult> Index()
         {
             return View(_mapper.Map<IEnumerable<ProdutoViewModel>>(await _produtoRepository.ObterProdutosFornecedores()));
         }
 
+        [AllowAnonymous]
         [Route("dados-do-produto/{id:guid}")]
         public async Task<IActionResult> Details(Guid id)
         {
@@ -51,6 +56,7 @@ namespace Loren.Api.Controllers
             return View(produtoViewModel);
         }
 
+        [ClaimsAuthorize("Produto", "Adicionar")]
         [Route("novo-produto")]
         public async Task<IActionResult> Create()
         {
@@ -59,6 +65,7 @@ namespace Loren.Api.Controllers
             return View(produtoViewModel);
         }
 
+        [ClaimsAuthorize("Produto", "Adicionar")]
         [Route("novo-produto")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -80,10 +87,13 @@ namespace Loren.Api.Controllers
             if (!OperacaoValida())
                 return View(produtoViewModel);
 
+            TempData["Sucesso"] = "Produto adicionado com Sucesso!";
+
             return RedirectToAction(nameof(Index));
 
         }
 
+        [ClaimsAuthorize("Produto", "Editar")]
         [Route("editar-produto/{id:guid}")]
         public async Task<IActionResult> Edit(Guid id)
         {
@@ -95,6 +105,7 @@ namespace Loren.Api.Controllers
             return View(produtoViewModel);
         }
 
+        [ClaimsAuthorize("Produto", "Editar")]
         [Route("editar-produto/{id:guid}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -130,10 +141,13 @@ namespace Loren.Api.Controllers
             if (!OperacaoValida())
                 return View(produtoViewModel);
 
+            TempData["Sucesso"] = "Produto editado com Sucesso!";
+
             return RedirectToAction(nameof(Index));
 
         }
 
+        [ClaimsAuthorize("Produto", "Excluir")]
         [Route("excluir-produto/{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
@@ -145,6 +159,7 @@ namespace Loren.Api.Controllers
             return View(produto);
         }
 
+        [ClaimsAuthorize("Produto", "Excluir")]
         [Route("excluir-produto/{id:guid}")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

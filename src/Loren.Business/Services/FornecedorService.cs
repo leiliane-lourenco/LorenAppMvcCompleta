@@ -40,7 +40,7 @@ namespace Loren.Business.Services
             if (!ExecutarValidacao(new FornecedorValidation(), fornecedor))
                 return;
 
-            if (_fornecedorRepository.Buscar(f => f.Documento == fornecedor.Documento || f.Id != fornecedor.Id).Result.Any())
+            if (_fornecedorRepository.Buscar(f => f.Documento == fornecedor.Documento && f.Id != fornecedor.Id).Result.Any())
             {
                 Notificar("Já existe um fornecedor com o documento informado.");
                 return;

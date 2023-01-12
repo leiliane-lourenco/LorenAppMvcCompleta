@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Loren.Api.Extensions;
 using Loren.Api.ViewModels;
 using Loren.Business.Interfaces;
 using Loren.Business.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Loren.Api.Controllers
 {
+    [Authorize]
     public class FornecedoresController : BaseController
     {
         private readonly IFornecedorRepository _fornecedorRepository;
@@ -25,12 +28,14 @@ namespace Loren.Api.Controllers
             _mapper = mapper;
         }
 
+        [AllowAnonymous]
         [Route("lista-de-fornecedores")]
         public async Task<IActionResult> Index()
         {
             return View(_mapper.Map<IEnumerable<FornecedorViewModel>>(await _fornecedorRepository.ObterTodos()));
         }
 
+        [AllowAnonymous]
         [Route("dados-do-fornecedor/{id:guid}")]
         public async Task<IActionResult> Details(Guid id)
         {
@@ -42,13 +47,14 @@ namespace Loren.Api.Controllers
             return View(fonecedorViewModel);
         }
 
-
+        [ClaimsAuthorize("Fornecedor", "Adicionar")]
         [Route("novo-fornecedor")]
         public IActionResult Create()
         {
             return View();
         }
 
+        [ClaimsAuthorize("Fornecedor", "Adicionar")]
         [Route("novo-fornecedor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -64,10 +70,13 @@ namespace Loren.Api.Controllers
             if (!OperacaoValida())
                 return View(fornecedorViewModel);
 
+            TempData["Sucesso"] = "Fornecedor adicionado com Sucesso!";
+
             return RedirectToAction(nameof(Index));
 
         }
 
+        [ClaimsAuthorize("Fornecedor", "Editar")]
         [Route("editar-fornecedor/{id:guid}")]
         public async Task<IActionResult> Edit(Guid id)
         {
@@ -79,6 +88,8 @@ namespace Loren.Api.Controllers
             return View(fornecedorViewModel);
         }
 
+
+        [ClaimsAuthorize("Fornecedor", "Editar")]
         [Route("editar-fornecedor/{id:guid}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -96,10 +107,13 @@ namespace Loren.Api.Controllers
             if (!OperacaoValida())
                 return View(await ObterFornecedorProdutosEndereco(id));
 
+            TempData["Sucesso"] = "Fornecedor editado com Sucesso!";
+
             return RedirectToAction(nameof(Index));            
             
         }
 
+        [ClaimsAuthorize("Fornecedor", "Excluir")]
         [Route("excluir-fornecedor/{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
@@ -111,6 +125,7 @@ namespace Loren.Api.Controllers
             return View(fonecedorViewModel);
         }
 
+        [ClaimsAuthorize("Fornecedor", "Excluir")]
         [Route("excluir-fornecedor/{id:guid}")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -126,9 +141,12 @@ namespace Loren.Api.Controllers
             if (!OperacaoValida())
                 return View(fornecedor);
 
+            TempData["Sucesso"] = "Fornecedor excluido com Sucesso!";
+
             return RedirectToAction("Index");
         }
 
+        [AllowAnonymous]
         [Route("obter-endereco-fornecedor/{id:guid}")]
         public async Task<IActionResult> ObterEndereco (Guid id)
         {
@@ -140,6 +158,8 @@ namespace Loren.Api.Controllers
             return PartialView("_DetalhesEndereco", fornecedor);
         }
 
+
+        [ClaimsAuthorize("Fornecedor", "Editar")]
         [Route("atualizar-endereco-fornecedor/{id:guid}")]
         public async Task<IActionResult> AtualizarEndereco(Guid id)
         {
@@ -151,6 +171,8 @@ namespace Loren.Api.Controllers
             return PartialView("_AtualizarEndereco", new FornecedorViewModel { Endereco = fornecedor.Endereco });
         }
 
+
+        [ClaimsAuthorize("Fornecedor", "Editar")]
         [Route("atualizar-endereco-fornecedor/{id:guid}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
